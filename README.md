@@ -5,6 +5,8 @@ A smart IoT-based water monitoring system that measures **water level & distance
 
 ## 📊 Live Status
 
+🌐 **Live Dashboard** | https://water-tank-monitor.srinivasa.dev |
+
 | Water Level | Distance |
 |-------------|----------|
 | ![Water Level](https://img.shields.io/endpoint?url=https://water-tank-monitor-worker.srinivasa.dev/badge/level&style=flat&labelColor=000000) | ![Distance](https://img.shields.io/endpoint?url=https://water-tank-monitor-worker.srinivasa.dev/badge/distance&style=flat&labelColor=000000) |
@@ -81,4 +83,7 @@ Ultrasonic Sensor → ESP8266 → WiFi → Cloudflare Worker → GitHub README B
 
 ## 📄 License
 
-MIT License — free to use, modify, and improve.
+This project is licensed under the **Apache License 2.0**.  
+You are free to use, modify, and distribute this software, but you **must include proper attribution** and a copy of the license.
+
+📜 Full License: [Apache 2.0](LICENSE)
