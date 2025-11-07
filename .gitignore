@@ -1,0 +1,13 @@
+# Hide sensitive files
+secrets.h
+*.pem
+*.key
+
+# Ignore build/output
+*.bin
+*.elf
+*.hex
+
+# OS-specific junk
+.DS_Store
+Thumbs.db
