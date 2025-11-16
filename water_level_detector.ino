@@ -29,8 +29,8 @@ char pass[] = WIFI_PASS;
 BlynkTimer timer;
 
 // --- Tank calibration (in cm) ---
-#define DMAX 117   // Distance when tank is empty (sensor → bottom)
-#define DMIN 25    // Distance when tank is full (sensor → water)
+#define DMAX 112   // Distance when tank is empty (sensor → bottom)
+#define DMIN 20    // Distance when tank is full (sensor → water)
 float lowThreshold = 25.0;  // Below this % → motor ON alert
 float fullThreshold = 90.0; // Above this % → motor OFF alert
 
@@ -235,30 +235,6 @@ String jsonEscape(const String& s) {
   return out;
 }
 
-// Deep Sleep Logic - call this inside loop()
-void handleDeepSleep() {
-  static unsigned long startMillis = millis();
-
-  if (otaMode) {
-    // OTA Mode active → Don't sleep
-    // Optional: Reset timer so sleep doesn't trigger immediately when OTA is turned off later
-    workerData = {-1, -1, "OTA Mode Enabled - Deep Sleep Disabled", true};
-
-    startMillis = millis();
-    return;
-  }
-
-  // If 60 seconds have passed and OTA mode is NOT active → go to sleep
-  if (millis() - startMillis >= 60000) {  // 60 sec delay before sleep
-    workerData = {-1, -1, "Device entering Deep Sleep...", true};
-
-    delay(200);  // Allow logs/Blynk messages to send before sleep
-
-    ESP.deepSleep(60e6, WAKE_RF_DEFAULT);   // Sleep for 60 seconds (test value)
-    // ESP.deepSleep(4 * 60 * 60e6);  // 4 hours in real use
-  }
-}
-
 void connectWiFiAndBlynk() {
   Serial.println("\n[Boot] Waking and connecting...");
 
@@ -278,6 +254,9 @@ void connectWiFiAndBlynk() {
   if (WiFi.status() == WL_CONNECTED) {
     Serial.print("WiFi OK, IP: ");
     Serial.println(WiFi.localIP());
+
+    // Enable modem sleep (reduces Wi-Fi idle current draw while staying connected)
+    WiFi.setSleepMode(WIFI_MODEM_SLEEP);
   } else {
     Serial.println("WiFi FAILED");
   }
@@ -310,8 +289,10 @@ void setup() {
   connectWiFiAndBlynk();
 
   setupOTA(); // Initialize OTA updates
+  
+  sendDistance();
 
-  timer.setInterval(60000L, sendDistance); // For OTA testing (every 1 min)
+  timer.setInterval(2UL * 60UL * 60UL * 1000UL, sendDistance); // every 2 hours
 }
 
 void loop() {
