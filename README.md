@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://water-tank-monitor.srinivasa.dev/assets/banner.jpeg" alt="Smart Water Tank Monitor Banner" width="100%" />
+  <img src="https://water-tank-monitor.srinivasa.dev/assets/banner.jpeg" alt="Smart Water Tank Monitor Banner" width="80%" />
 </p>
 
 ## 💧 Smart Water Tank Monitor (ESP8266 + Blynk + Cloudflare Worker)
